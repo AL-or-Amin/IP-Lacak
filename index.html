@@ -3,58 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pengguna</title>
+    <title>Data Form</title>
 </head>
 <body>
-    <h1>Form Pengguna</h1>
-    <form id="userForm">
-        <label for="name">Nama:</label>
+    <h1>Data Form</h1>
+    <form id="dataForm">
+        <label for="name">Name:</label>
         <input type="text" id="name" required><br><br>
         
-        <label for="age">Umur:</label>
+        <label for="age">Age:</label>
         <input type="number" id="age" required><br><br>
         
-        <label for="dob">Tanggal Lahir:</label>
-        <input type="date" id="dob" required><br><br>
-        
-        <button type="button" onclick="sendData()">Pencet Ini</button>
+        <label for="birthdate">Birthdate:</label>
+        <input type="date" id="birthdate" required><br><br>
+
+        <button type="submit">Send Data</button>
     </form>
 
     <script>
-        function sendData() {
-            // Mengambil nilai dari form
+        document.getElementById('dataForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
             const name = document.getElementById('name').value;
             const age = document.getElementById('age').value;
-            const dob = document.getElementById('dob').value;
+            const birthdate = document.getElementById('birthdate').value;
 
-            // Meminta izin lokasi
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-
-                    // Mengirim data ke server
-                    fetch('http://180.241.180.188>:3000/submit', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ name, age, dob, latitude, longitude }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert('Data berhasil dikirim: ' + JSON.stringify(data));
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }, error => {
-                    console.error('Error getting location:', error);
-                });
-            } else {
-                alert('Geolocation tidak didukung oleh browser ini.');
-            }
-        }
+            // Kirim data ke server
+            fetch('http://180.241.180.188:3000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, age, birthdate })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
     </script>
 </body>
-  </html
+</html>
