@@ -25,7 +25,7 @@
             margin-top: 20px;
             font-size: 18px;
             text-decoration: none;
-            color: blue;
+            color: green;
         }
     </style>
 </head>
@@ -41,7 +41,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const ipAddress = data.ip;
-                    document.getElementById('ipDisplay').innerText = `IP Saya: ${ipAddress}    _*[Kirim]*_;`;
+                    document.getElementById('ipDisplay').innerText = `IP Saya: ${ipAddress} [Kirim];`;
                     
                     // Tampilkan link WhatsApp
                     const whatsappLink = document.getElementById('whatsappLink');
