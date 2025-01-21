@@ -25,7 +25,15 @@
             margin-top: 20px;
             font-size: 18px;
             text-decoration: none;
-            color: green;
+            color: #00FF00;
+            border: 3px solid #000; /* Border warna hitam */
+            padding: 10px; /* Padding di dalam box */
+            border-radius: 5px; /* Sudut membulat */
+            background-color: grey; /* Ganti dengan warna yang diinginkan */
+            transition: background-color 0.3s; /* Animasi saat hover */
+        }
+        a:hover {
+            background-color: rgba(0, 255, 0, 0.2); /* Warna latar belakang saat hover */
         }
     </style>
 </head>
@@ -41,12 +49,12 @@
                 .then(response => response.json())
                 .then(data => {
                     const ipAddress = data.ip;
-                    document.getElementById('ipDisplay').innerText = `IP Saya: ${ipAddress} [Kirim];`;
+                    document.getElementById('ipDisplay').innerText = ipAddress; // Tampilkan IP saja
                     
                     // Tampilkan link WhatsApp
                     const whatsappLink = document.getElementById('whatsappLink');
-                    whatsappLink.href = `https://wa.me/6287713740114?text=IP%20Saya%3A%20${ipAddress};
-                    whatsappLink.innerText = 'Kirimkan IP mu';
+                    whatsappLink.href = `https://wa.me/6287713740114?text=IP%20Saya%3A%20${ipAddress}%20[Kirim]`;
+                    whatsappLink.innerText = 'Kirimkan IP [Pencet]';
                     whatsappLink.style.display = 'block'; // Tampilkan link
                 })
                 .catch(error => {
@@ -56,4 +64,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
