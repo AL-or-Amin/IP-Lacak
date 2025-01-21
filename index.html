@@ -3,64 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelacakan Informasi IP</title>
+    <title>Cek IP Pengguna</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #ipDisplay {
+            margin: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            font-size: 18px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
 </head>
 <body>
-    <h1>Pelacakan Informasi IP</h1>
-    <button id="trackIP">Lacak Informasi Saya</button>
-    <pre id="result"></pre>
+    <h1>Cek IP Anda</h1>
+    <button onclick="checkIP()">Cek IP</button>
+    <div id="ipDisplay"></div>
+    <a id="whatsappLink" style="display: none;"></a>
 
     <script>
-        document.getElementById('trackIP').addEventListener('click', async () => {
-            try {
-                // Mengambil informasi IP dan lokasi dari server pihak ketiga
-                const ipResponse = await fetch('https://ipinfo.io/36.75.64.190/json?token=6d8519218e7b69');
-                const ipData = await ipResponse.json();
-
-                // Mengambil informasi OS dan baterai
-                const battery = await navigator.getBattery();
-                const os = navigator.userAgent;
-
-                // Menggabungkan semua data
-                const data = {
-                    ip: ipData.ip,
-                    city: ipData.city,
-                    region: ipData.region,
-                    country: ipData.country,
-                    loc: ipData.loc,
-                    org: ipData.org,
-                    hostname: ipData.hostname,
-                    os: os,
-                    batteryLevel: battery.level * 100 + '%',
-                    charging: battery.charging,
-                };
-
-                // Menampilkan hasil di halaman
-                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
-
-                // Mengirim data ke backend
-                await fetch('http://192.168.1.3:3000/api/data', { // Ganti dengan IP backend Anda
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
+        function checkIP() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ipAddress = data.ip;
+                    document.getElementById('ipDisplay').innerText = `IP Anda: ${ipAddress}`;
+                    
+                    // Tampilkan link WhatsApp
+                    const whatsappLink = document.getElementById('whatsappLink');
+                    whatsappLink.href = `https://wa.me/6287713740114?text=IP%20Anda%3A%20${ipAddress}`;
+                    whatsappLink.innerText = 'Kirimkan IP mu';
+                    whatsappLink.style.display = 'block'; // Tampilkan link
+                })
+                .catch(error => {
+                    console.error('Terjadi kesalahan:', error);
+                    document.getElementById('ipDisplay').innerText = 'Gagal mendapatkan IP.';
                 });
-
-                // Mengirim data ke server pihak ketiga
-                await fetch('https://example.com/api/external', { // Ganti dengan URL server pihak ketiga
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                alert('Data berhasil dikirim ke backend dan server pihak ketiga!');
-            } catch (error) {
-                console.error('Terjadi kesalahan:', error);
-            }
-        });
+        }
     </script>
 </body>
-</html
+</html>
