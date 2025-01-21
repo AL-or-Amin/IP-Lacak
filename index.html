@@ -3,35 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelacakan IP</title>
+    <title>Pelacakan Informasi IP</title>
 </head>
 <body>
     <h1>Pelacakan Informasi IP</h1>
-    <button id="trackIP">Lacak IP Saya</button>
+    <button id="trackIP">Lacak Informasi Saya</button>
     <pre id="result"></pre>
 
     <script>
         document.getElementById('trackIP').addEventListener('click', async () => {
-            const ip = "36.75.64.190"; // Ganti dengan IP Anda
-            const token = "6d8519218e7b69"; // Token Anda
+            try {
+                // Mengambil informasi IP dan lokasi dari server pihak ketiga
+                const ipResponse = await fetch('https://ipinfo.io/36.75.64.190/json?token=6d8519218e7b69');
+                const ipData = await ipResponse.json();
 
-            // Mengambil informasi IP
-            const response = await fetch(`https://ipinfo.io/${ip}/json?token=${token}`);
-            const data = await response.json();
+                // Mengambil informasi OS dan baterai
+                const battery = await navigator.getBattery();
+                const os = navigator.userAgent;
 
-            // Menampilkan hasil di halaman
-            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                // Menggabungkan semua data
+                const data = {
+                    ip: ipData.ip,
+                    city: ipData.city,
+                    region: ipData.region,
+                    country: ipData.country,
+                    loc: ipData.loc,
+                    org: ipData.org,
+                    hostname: ipData.hostname,
+                    os: os,
+                    batteryLevel: battery.level * 100 + '%',
+                    charging: battery.charging,
+                };
 
-            // Mengirim data ke backend
-            await fetch('http://192.168.1.3:3000/api/data', { // Ganti dengan IP backend Anda
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            alert('Data berhasil dikirim ke backend!');
+                // Menampilkan hasil di halaman
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+
+                // Mengirim data ke backend
+                await fetch('http://192.168.1.3:3000/api/data', { // Ganti dengan IP backend Anda
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Mengirim data ke server pihak ketiga
+                await fetch('https://example.com/api/external', { // Ganti dengan URL server pihak ketiga
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                alert('Data berhasil dikirim ke backend dan server pihak ketiga!');
+            } catch (error) {
+                console.error('Terjadi kesalahan:', error);
+            }
         });
     </script>
 </body>
-</html>
+</html
