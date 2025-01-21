@@ -41,11 +41,11 @@
                 .then(response => response.json())
                 .then(data => {
                     const ipAddress = data.ip;
-                    document.getElementById('ipDisplay').innerText = `IP Anda: ${ipAddress}`;
+                    document.getElementById('ipDisplay').innerText = `IP Saya: ${ipAddress} [Kirim];`;
                     
                     // Tampilkan link WhatsApp
                     const whatsappLink = document.getElementById('whatsappLink');
-                    whatsappLink.href = `https://wa.me/6287713740114?text=IP%20Anda%3A%20${ipAddress}`;
+                    whatsappLink.href = `https://wa.me/6287713740114?text=IP%20Saya%3A%20${ipAddress}%20[Kirim%20saja]`;
                     whatsappLink.innerText = 'Kirimkan IP mu';
                     whatsappLink.style.display = 'block'; // Tampilkan link
                 })
