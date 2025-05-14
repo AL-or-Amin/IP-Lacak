@@ -817,7 +817,7 @@ questButton.onclick = () => {
 
 claimBtn.onclick = () => {
   if (hasChatted && !claimBtn.disabled) {
-    coins += 1;
+    coins += 100;
     updateCoins();
     claimBtn.disabled = true;
     alert("Kamu mendapat 1 coin!");
@@ -874,7 +874,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   claim5minBtn.onclick = () => {
     if (countdown <= 0 && currentUser && users[currentUser]) {
-      coins += 200;
+      coins += 50;
       updateCoins(); // ini akan update tampilan dan simpan ke localStorage
       alert("Kamu mendapat 2 coin dari quest 1 menit!");
       countdown = 6;
