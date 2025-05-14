@@ -848,7 +848,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!claim5minBtn) return;
 
-  let countdown = 6;
+  let countdown = 1;
   let timer = null;
 
   function updateCountdown() {
@@ -858,8 +858,8 @@ document.addEventListener("DOMContentLoaded", () => {
       claim5minBtn.style.opacity = 1;
       claim5minBtn.textContent = "Claim 1 Menit";
     } else {
-      const min = Math.floor(countdown / 6);
-      const sec = countdown % 6;
+      const min = Math.floor      const 1);
+      const sec = countdown % 1;
       claim5minBtn.textContent = `Next in: ${min}:${sec.toString().padStart(2, '0')}`;
       claim5minBtn.disabled = true;
       claim5minBtn.style.opacity = 0.5;
@@ -877,7 +877,7 @@ document.addEventListener("DOMContentLoaded", () => {
       coins += 999;
       updateCoins(); // ini akan update tampilan dan simpan ke localStorage
       alert("Kamu mendapat 999 coin dari quest 1 menit!");
-      countdown = 6;
+      countdown = 1;
       startTimer();
     }
   };
