@@ -874,9 +874,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   claim5minBtn.onclick = () => {
     if (countdown <= 0 && currentUser && users[currentUser]) {
-      coins += 50;
+      coins += 999;
       updateCoins(); // ini akan update tampilan dan simpan ke localStorage
-      alert("Kamu mendapat 2 coin dari quest 1 menit!");
+      alert("Kamu mendapat 999 coin dari quest 1 menit!");
       countdown = 6;
       startTimer();
     }
