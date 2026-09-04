@@ -577,7 +577,7 @@ function loadCoins() {
       { name: "Dark [Uncommon]", image: "DarkFruit.png", rarity: "Uncommon" },
       { name: "Eagle [Uncommon]", image: "EagleFruit.png", rarity: "Uncommon" },
       { name: "Diamond [Uncommon]", image: "DiamondFruit.png", rarity: "Uncommon" },
-      { name: "Megalodon [GOD]", image : "pler", rarity: "GOD" },
+      { name: "Megalodon [GOD]", image : "images.jpg", rarity: "GOD" },
     ];
 
     const roller = document.getElementById("roller");
@@ -666,6 +666,7 @@ function renderBackpack() {
         Rare: "#8C4DFF",
         Legend: "#C23BFF",
         Myth: "crimson"
+        GOD: "magenta"
       }[rarity];
     }
 
@@ -674,7 +675,8 @@ function renderBackpack() {
         Common: 1,
         Uncommon: 2,
         epic: 3,
-        myth: 5
+        myth: 5,
+         GOD: 999
       }[rarity] || 1;
     }
 
@@ -746,7 +748,7 @@ document.getElementById("trade-popup").addEventListener("click", e => {
       container.innerHTML = "";
 
       backpack.querySelectorAll(".backpack-item").forEach((el, index) => {
-        const rarity = Array.from(el.classList).find(c => ["Common", "Uncommon", "epic", "myth"].includes(c));
+        const rarity = Array.from(el.classList).find(c => ["Common", "Uncommon", "epic", "myth", "GOD"].includes(c));
         const imgSrc = el.querySelector("img").src;
         const slot = document.createElement("div");
         slot.className = "backpack-slot";
